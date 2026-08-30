@@ -38,7 +38,8 @@ public class JobWorker implements Runnable {
     Instant end = Instant.now();
     long executionTime = Duration.between(start, end).toMillis();
     job.setExecutionTime(executionTime);
-    System.out.println("Job " + job.getJobId() + " completed in " + job.getExecutionTime());
+    System.out.println(
+        "Job " + job.getJobId() + " completed in " + job.getExecutionTime());
   }
 
 }
