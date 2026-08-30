@@ -3,16 +3,18 @@ import job.JobWorker;
 
 public class Main {
   public static void main(String[] args) {
-
+    Thread[] workers = new Thread[10];
     System.out.print("Initiating Job threads");
-    for (long i = 0; i < 10; i++) {
-      Job runningJob = new Job(i, "%dthRunner".formatted(i));
+    for (int i = 0; i < 10; i++) {
+      Job runningJob = new Job((long) i, "%dthRunner".formatted(i));
       JobWorker runningJobWorker = new JobWorker(runningJob);
-      Thread jobWorkerThread = new Thread(runningJobWorker);
-      jobWorkerThread.start();
+      workers[i] = new Thread(runningJobWorker);
+      workers[i].start();
     }
     try {
-      Thread.currentThread().join();
+      for (Thread worker : workers) {
+        worker.join();
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

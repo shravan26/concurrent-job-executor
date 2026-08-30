@@ -14,31 +14,31 @@ public class JobWorker implements Runnable {
   }
 
   public void run() {
-    System.out.print("Job " + job.getJobId() + " has been created with status " + job.getJobStatus());
+    System.out.println("Job " + job.getJobId() + " has been created with status " + job.getJobStatus());
     Instant start = Instant.now();
-    while (job.getJobStatus().equals(JobStatus.SUCCESS) || job.getJobStatus().equals(JobStatus.FAILED)) {
+    while (!(job.getJobStatus().equals(JobStatus.SUCCESS) || job.getJobStatus().equals(JobStatus.FAILED))) {
       if (job.getJobStatus().equals(JobStatus.INITIATED)) {
         job.setJobStatus(JobStatus.QUEUED);
-        System.out.print("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
+        System.out.println("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
       } else if (job.getJobStatus().equals(JobStatus.QUEUED)) {
         job.setJobStatus(JobStatus.PENDING);
-        System.out.print("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
-        job.setJobStatus(JobStatus.QUEUED);
+        System.out.println("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
       } else if (job.getJobStatus().equals(JobStatus.PENDING)) {
         Double chance = Math.random() * 10;
         job.setJobStatus(chance > 5 ? JobStatus.SUCCESS : JobStatus.FAILED);
-        Instant end = Instant.now();
-        long executionTime = Duration.between(start, end).toMillis();
-        job.setExecutionTime(executionTime);
-        System.out.print("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
+        System.out.println("Job " + job.getJobId() + " has been updated with status " + job.getJobStatus());
       }
       try {
-        Thread.sleep(1000);
+        Double duration = (Math.random() * 5000);
+        Thread.sleep(duration.longValue());
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
-    System.out.println("Job " + job.getJobId() + "completed in " + job.getExecutionTime());
+    Instant end = Instant.now();
+    long executionTime = Duration.between(start, end).toMillis();
+    job.setExecutionTime(executionTime);
+    System.out.println("Job " + job.getJobId() + " completed in " + job.getExecutionTime());
   }
 
 }
