@@ -13,7 +13,8 @@ public class Counter {
     this.value = 0;
   }
 
-  protected void increment() {
+  protected synchronized void increment() {
+
     int current = this.value;
     Double timeout = Math.random() * 10;
     try {
