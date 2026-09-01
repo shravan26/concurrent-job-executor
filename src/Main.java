@@ -4,10 +4,10 @@ import job.JobWorker;
 
 public class Main {
   public static void main(String[] args) {
-    Thread[] workers = new Thread[10];
+    Thread[] workers = new Thread[100];
     Counter counter = new Counter();
     System.out.print("Initiating Job threads");
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
       Job runningJob = new Job((long) i, "%dthRunner".formatted(i));
       JobWorker runningJobWorker = new JobWorker(runningJob, counter);
       workers[i] = new Thread(runningJobWorker);

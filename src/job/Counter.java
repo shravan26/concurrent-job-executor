@@ -1,5 +1,7 @@
 package job;
 
+import java.util.concurrent.TimeUnit;
+
 public class Counter {
   private int value;
 
@@ -12,7 +14,14 @@ public class Counter {
   }
 
   protected void increment() {
-    this.value += 1;
+    int current = this.value;
+    Double timeout = Math.random() * 10;
+    // try {
+    // TimeUnit.MILLISECONDS.sleep(timeout.longValue());
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    this.value = current + 1;
   }
 
   public int getValue() {
