@@ -8,9 +8,11 @@ import java.time.Instant;
  */
 public class JobWorker implements Runnable {
   private Job job;
+  private Counter counter;
 
-  public JobWorker(Job job) {
+  public JobWorker(Job job, Counter counter) {
     this.job = job;
+    this.counter = counter;
   }
 
   public void run() {
@@ -35,11 +37,13 @@ public class JobWorker implements Runnable {
         e.printStackTrace();
       }
     }
+    counter.increment();
     Instant end = Instant.now();
     long executionTime = Duration.between(start, end).toMillis();
     job.setExecutionTime(executionTime);
     System.out.println(
-        "Job " + job.getJobId() + " completed in " + job.getExecutionTime());
+        "Job " + job.getJobId() + " completed in " + job.getExecutionTime() + " with counter value as "
+            + counter.getValue());
   }
 
 }
