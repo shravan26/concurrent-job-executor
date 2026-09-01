@@ -16,11 +16,11 @@ public class Counter {
   protected void increment() {
     int current = this.value;
     Double timeout = Math.random() * 10;
-    // try {
-    // TimeUnit.MILLISECONDS.sleep(timeout.longValue());
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
+    try {
+      TimeUnit.MILLISECONDS.sleep(timeout.longValue());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     this.value = current + 1;
   }
 
